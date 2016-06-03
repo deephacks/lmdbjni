@@ -86,6 +86,12 @@ LMDB JNI is available for 64 bit Linux, OSX, Windows and Android.
 
 <dependency>
   <groupId>org.deephacks.lmdbjni</groupId>
+  <artifactId>lmdbjni-linux32</artifactId>
+  <version>${lmdbjni.version}</version>
+</dependency>
+
+<dependency>
+  <groupId>org.deephacks.lmdbjni</groupId>
   <artifactId>lmdbjni-linux64</artifactId>
   <version>${lmdbjni.version}</version>
 </dependency>
