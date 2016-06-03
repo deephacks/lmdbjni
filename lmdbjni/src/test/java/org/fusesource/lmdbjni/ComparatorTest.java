@@ -43,7 +43,7 @@ public class ComparatorTest {
 
   @Test
   public void testSetComparatorAsc() {
-    if (Util.isAndroid()) {
+    if (Util.isAndroid() || Util.is32Bit()) {
       return;
     }
 
@@ -77,7 +77,7 @@ public class ComparatorTest {
 
   @Test
   public void testSetComparatorDesc() {
-    if (Util.isAndroid()) {
+    if (Util.isAndroid() || Util.is32Bit()) {
       return;
     }
     Transaction writeTransaction = env.createWriteTransaction();
@@ -111,7 +111,7 @@ public class ComparatorTest {
 
   @Test
   public void testSetDirectComparatorAsc() {
-    if (Util.isAndroid()) {
+    if (Util.isAndroid() || Util.is32Bit()) {
       return;
     }
     Transaction writeTransaction = env.createWriteTransaction();
@@ -144,7 +144,7 @@ public class ComparatorTest {
 
   @Test
   public void testSetDirectComparatorDesc() {
-    if (Util.isAndroid()) {
+    if (Util.isAndroid() || Util.is32Bit()) {
       return;
     }
     Transaction writeTransaction = env.createWriteTransaction();

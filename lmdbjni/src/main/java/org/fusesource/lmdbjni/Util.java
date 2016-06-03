@@ -61,6 +61,10 @@ class Util {
       return false;
     }
   }
+
+  static boolean is32Bit() {
+    return Unsafe.ADDRESS_SIZE == 4;
+  }
   
   /**
    * Fetches a C-style null terminated char[] from the specified buffer, returning

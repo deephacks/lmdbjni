@@ -644,6 +644,7 @@ public class Database extends NativeObject implements AutoCloseable {
    *
    * <p>
    *   Does not work on Android at the moment (related to hawtjni-callback).
+   *   Does not work on 32-bit Linux at the moment (related to address space?)
    * </p>
    *
    * @param tx Transaction handle.

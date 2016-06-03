@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+Copyright (C) 2013, RedHat, Inc.
+
+http://www.redhat.com/
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.deephacks.lmdbjni</groupId>
+    <artifactId>lmdbjni-project</artifactId>
+    <version>0.4.7-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>lmdbjni-linux32</artifactId>
+  <version>0.4.7-SNAPSHOT</version>
+
+  <name>${project.artifactId}</name>
+  <description>The lmdbjni linux 32 bit native libraries</description>
+
+  <properties>
+    <lmdb-home>${project.build.directory}/lmdb/META-INF/native/lmdb-linux32</lmdb-home>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.deephacks.lmdbjni</groupId>
+      <artifactId>lmdbjni</artifactId>
+      <version>0.4.7-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <testSourceDirectory>${basedir}/../lmdbjni/src/test/java</testSourceDirectory>
+    <sourceDirectory>${basedir}/../lmdbjni/src/main/java</sourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.1</version>
+        <configuration>
+          <classesDirectory>${basedir}/target/generated-sources/hawtjni/lib</classesDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.fusesource.hawtjni</groupId>
+        <artifactId>maven-hawtjni-plugin</artifactId>
+        <version>${hawtjni-version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <name>lmdbjni</name>
+          <classified>false</classified>
+          <nativeSrcDependency>
+            <groupId>org.deephacks.lmdbjni</groupId>
+            <artifactId>lmdbjni</artifactId>
+            <version>${project.version}</version>
+            <classifier>native-src</classifier>
+            <type>zip</type>
+          </nativeSrcDependency>
+          <configureArgs>
+            <arg>--with-lmdb=${basedir}/../lmdbjni/src/main/native-package/src</arg>
+          </configureArgs>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution>
+            <id>add-test-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${basedir}/../lmdbjni/target/generated-sources</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

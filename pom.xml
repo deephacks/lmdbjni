@@ -220,6 +220,7 @@
       <id>full</id>
       <modules>
         <module>lmdbjni-osx64</module>
+        <module>lmdbjni-linux32</module>
         <module>lmdbjni-linux64</module>
         <module>lmdbjni-android</module>
         <module>lmdbjni-win64</module>
@@ -231,6 +232,48 @@
       <modules>
         <module>lmdbjni-osx64</module>
       </modules>
+    </profile>
+
+    <profile>
+      <id>linux32</id>
+      <modules>
+        <module>lmdbjni-linux32</module>
+      </modules>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.7.2.201409121644</version>
+            <configuration>
+              <excludes>
+                <!-- tested by third party -->
+                <exclude>**/DirectBuffer*</exclude>
+                <!-- this is LMDB -->
+                <exclude>**/JNI*</exclude>
+                <exclude>**/Util*</exclude>
+              </excludes>
+            </configuration>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.eluder.coveralls</groupId>
+            <artifactId>coveralls-maven-plugin</artifactId>
+            <version>3.0.1</version>
+            <configuration>
+              <sourceEncoding>utf8</sourceEncoding>
+              <repoToken>t0ZqivSo91X1wfD5BNbbKDH5pwiI4y9YM</repoToken>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
 
     <profile>
