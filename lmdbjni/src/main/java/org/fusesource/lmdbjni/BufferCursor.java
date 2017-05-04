@@ -320,6 +320,17 @@ public class BufferCursor implements AutoCloseable {
     cursor.delete();
   }
 
+
+  /**
+   * <p>
+   * Delete key/data. Only for
+   * {@link org.fusesource.lmdbjni.Constants#DUPSORT}.
+   * </p>
+   */
+  public void deleteDup() {
+    cursor.deleteIncludingDups();
+  }
+
   /**
    * Close the cursor and the transaction.
    */
@@ -349,6 +360,29 @@ public class BufferCursor implements AutoCloseable {
       throw new LMDBException(msg, rc);
     }
   }
+
+
+  /**
+   * general purpose put method, so client can have more control
+   * of the flag they need.
+   */
+  public boolean put(int flag) {
+    DirectBuffer k = (keyWriteIndex != 0) ?
+            new DirectBuffer(key.addressOffset(), keyWriteIndex) : key;
+    DirectBuffer v = (valWriteIndex != 0) ?
+            new DirectBuffer(value.addressOffset(), valWriteIndex) : value;
+    keyWriteIndex = 0;
+    valWriteIndex = 0;
+    int rc = cursor.put(k, v, flag);
+    if (rc == 0) {
+      return true;
+    } else {
+      String msg = Util.string(mdb_strerror(rc));
+      throw new LMDBException(msg, rc);
+    }
+  }
+
+
 
   /**
    * Stores key/data pairs in the database replacing any
