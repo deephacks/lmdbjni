@@ -124,6 +124,8 @@ Recommended package imports.
 ```
 
 [Opening](http://deephacks.org/lmdbjni/apidocs/org/fusesource/lmdbjni/Env.html#open-java.lang.String-int-int-) and closing the database.
+`Env` and `Database` shall be opened when the class is created (application, dao for example) and should be kept opened. 
+ 
 ```java
  try (Env env = new Env("/tmp/mydb")) {
    try (Database db = env.openDatabase()) {
@@ -208,6 +210,25 @@ is closed. Both these try blocks are ***unsafe*** and may SIGSEGV.
    tx.commit();
  }
 ```
+A safer approach would be: 
+
+```java 
+try (Transaction tx = env.createWriteTransaction()) {
+    try (Cursor cursor = db.openCursor(tx)) {
+       ...
+    }
+    tx.commit();
+}
+
+try (Transaction tx = env.createWriteTransaction()) {
+    try (Cursor cursor = db.iterate(tx)) {
+        ...
+    }
+    tx.commit();
+}
+
+```
+
 
 A cursor in a read-only transaction must be closed explicitly,
 before or after its transaction ends. Both these try blocks are safe.
