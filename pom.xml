@@ -31,7 +31,7 @@
   <url>http://lmdbjni.deephacks.org</url>
 
   <properties>
-    <hawtjni-version>1.11</hawtjni-version>
+    <hawtjni-version>1.15</hawtjni-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
